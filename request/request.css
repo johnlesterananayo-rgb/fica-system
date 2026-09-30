@@ -1,0 +1,51 @@
+body { font-family:Arial, sans-serif; background:#eef2f7; margin:0; }
+
+.header {
+  background:#007BFF; color:#fff; padding:15px;
+  display:flex; align-items:center;
+}
+.header .logo { height:40px; margin-right:10px; }
+
+.dashboard { display:flex; height:calc(100vh - 60px); }
+
+.sidebar {
+  width:220px; background:#007BFF; color:#fff; padding:20px;
+}
+.sidebar ul { list-style:none; padding:0; margin:0; }
+.sidebar li { margin:12px 0; }
+.sidebar a {
+  display:block; padding:8px 10px;
+  color:#fff; text-decoration:none;
+  border-radius:4px;
+}
+.sidebar a:hover { background:#0056b3; }
+
+.main { flex:1; padding:25px; background:#f4f6f9; }
+
+.card {
+  background:#fff; padding:30px; border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.add-btn {
+  background:#28a745; color:#fff; border:none;
+  padding:8px 12px; border-radius:6px; cursor:pointer;
+  margin-bottom:15px;
+}
+.add-btn:hover { background:#218838; }
+
+.edit-btn {
+  background:#17a2b8; color:#fff; border:none;
+  padding:6px 10px; border-radius:6px; cursor:pointer;
+}
+.edit-btn:hover { background:#117a8b; }
+
+.delete-btn {
+  background:#dc3545; color:#fff; border:none;
+  padding:6px 10px; border-radius:6px; cursor:pointer;
+}
+.delete-btn:hover { background:#c82333; }
+
+table { width:100%; border-collapse:collapse; margin-top:15px; }
+th, td { border:1px solid #ccc; padding:8px; text-align:center; }
+th { background:#007BFF; color:#fff; }

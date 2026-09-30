@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Settings - Fidelis Academy</title>
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <img src="logo.png" alt="Fidelis Logo" class="logo">
+    <span>FIDELIS CHILDREN'S ACADEMY</span>
+  </div>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="request.html">Request</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="student.html">Student</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="logs.html">Logs</a></li>
+        <li><a href="settings.html" class="active">Settings</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Settings -->
+    <div class="main">
+      <div class="card">
+        <h2>System Settings</h2>
+        <form>
+          <!-- Section: User Account -->
+          <div class="settings-section">
+            <h3>User Account</h3>
+            <label>Change Password</label>
+            <input type="password" placeholder="New Password">
+            <label>Registrar Name</label>
+            <input type="text" placeholder="Your Name">
+          </div>
+
+          <!-- Section: Notifications -->
+          <div class="settings-section">
+            <h3>Notifications</h3>
+            <label class="checkbox-container">
+              Email alerts for new requests
+              <input type="checkbox">
+              <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">
+              SMS alerts for pending approvals
+              <input type="checkbox">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+
+          <!-- Section: Data Export -->
+          <div class="settings-section">
+            <h3>Data Export</h3>
+            <label>Default export format</label>
+            <select>
+              <option>PDF</option>
+              <option>Excel</option>
+              <option>CSV</option>
+            </select>
+          </div>
+
+          <!-- Section: Academic Year -->
+          <div class="settings-section">
+            <h3>Academic Year</h3>
+            <label>Start Date</label>
+            <input type="date">
+            <label>End Date</label>
+            <input type="date">
+          </div>
+
+          <!-- Section: Security -->
+          <div class="settings-section">
+            <h3>Security</h3>
+            <label>Session Timeout (minutes)</label>
+            <input type="number" value="30">
+            <label class="checkbox-container">
+              Enable Two-Factor Authentication
+              <input type="checkbox">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+
+          <!-- Buttons -->
+          <div class="settings-actions">
+            <button class="save-btn">Save Settings</button>
+            <button class="cancel-btn" type="reset">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

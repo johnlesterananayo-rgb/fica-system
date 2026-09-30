@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student - Fidelis Academy</title>
+  <link rel="stylesheet" href="student.css">
+</head>
+<body>
+  <!-- Header with logo -->
+  <div class="header">
+    <img src="logo.png" alt="Fidelis Logo" class="logo">
+    <span>FIDELIS CHILDREN'S ACADEMY</span>
+  </div>
+
+  <div class="dashboard">
+    <!-- Sidebar navigation -->
+    <div class="sidebar">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="request.html">Request</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="student.html" class="active">Student</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="logs.html">Logs</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Main student area -->
+    <div class="main">
+      <div class="card">
+        <h2>Student Records</h2>
+
+        <!-- Add Student button -->
+        <button class="add-btn">Add Student</button>
+
+        <!-- Student table -->
+        <table class="student-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Grade</th>
+              <th>Section</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="5" style="text-align:center; color:#777;">
+                No student records available.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Hidden profile form design -->
+        <div class="profile-card">
+          <h3>Student Profile</h3>
+          <form>
+            <label>Name</label>
+            <input type="text" placeholder="Student Name"><br>
+
+            <label>Grade</label>
+            <input type="text" placeholder="Grade"><br>
+
+            <label>Section</label>
+            <input type="text" placeholder="Section"><br>
+
+            <label>Status</label>
+            <select>
+              <option>Active</option>
+              <option>Dropout</option>
+              <option>Transferred</option>
+            </select><br>
+
+            <button class="save-btn">Save</button>
+            <button class="cancel-btn" type="reset">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

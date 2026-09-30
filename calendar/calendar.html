@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calendar - Fidelis Academy</title>
+  <link rel="stylesheet" href="calendar.css">
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <img src="logo.png" alt="Fidelis Logo" class="logo">
+    <span>FIDELIS CHILDREN'S ACADEMY</span>
+  </div>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="request.html">Request</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="student.html">Student</a></li>
+        <li><a href="calendar.html" class="active">Calendar</a></li>
+        <li><a href="logs.html">Logs</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Full Calendar Area -->
+    <div class="main">
+      <div class="calendar-header">
+        <h2>September 2026</h2>
+        <button class="add-btn">+ Add Event</button>
+      </div>
+
+      <div class="calendar">
+        <div class="day-name">Sun</div>
+        <div class="day-name">Mon</div>
+        <div class="day-name">Tue</div>
+        <div class="day-name">Wed</div>
+        <div class="day-name">Thu</div>
+        <div class="day-name">Fri</div>
+        <div class="day-name">Sat</div>
+
+        <!-- Example days -->
+        <div class="day"></div>
+        <div class="day"></div>
+        <div class="day">1</div>
+        <div class="day">2</div>
+        <div class="day">3</div>
+        <div class="day">4</div>
+        <div class="day">5</div>
+        <div class="day">6</div>
+        <div class="day">7</div>
+        <div class="day">8</div>
+        <div class="day">9</div>
+        <div class="day">10</div>
+        <div class="day">11</div>
+        <div class="day">12</div>
+        <div class="day">13</div>
+        <div class="day">14</div>
+        <div class="day">15</div>
+        <div class="day">16</div>
+        <div class="day">17</div>
+        <div class="day">18</div>
+        <div class="day">19</div>
+        <div class="day">20</div>
+        <div class="day">21</div>
+        <div class="day">22</div>
+        <div class="day">23</div>
+        <div class="day">24</div>
+        <div class="day">25</div>
+        <div class="day">26</div>
+        <div class="day today">27</div>
+        <div class="day">28</div>
+        <div class="day">29</div>
+        <div class="day">30</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pop-up Event Form -->
+  <div class="popup">
+    <div class="popup-content">
+      <h3>Add Event</h3>
+      <form>
+        <label>Event Title</label>
+        <input type="text" placeholder="Enter event title">
+
+        <label>Date</label>
+        <input type="date">
+
+        <label>Description</label>
+        <textarea placeholder="Event details"></textarea>
+
+        <div class="popup-actions">
+          <button class="save-btn">Save</button>
+          <button class="cancel-btn" type="reset">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
