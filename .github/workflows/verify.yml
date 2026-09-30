@@ -1,0 +1,40 @@
+name: Sanity & Integrity Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify-repo-integrity:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verify Core Modules Exist
+        run: |
+          echo "🔍 Checking for essential module directories..."
+          REQUIRED_DIRS=("dashboard" "student" "login" "calendar" "reports")
+          for dir in "${REQUIRED_DIRS[@]}"; do
+            if [ ! -d "$dir" ]; then
+              echo "❌ CRITICAL ERROR: Directory '$dir' is missing!"
+              exit 1
+            fi
+          done
+          echo "✅ All core module directories exist."
+
+      - name: Check for Broken Absolute Paths
+        run: |
+          echo "🔍 Scanning HTML files for dangerous root pathing..."
+          # Warns or fails if someone uses href="/something.html" instead of relative paths
+          if grep -rn 'href="/' --include="*.html" .; then
+            echo "❌ ERROR: Found absolute root paths ('href=\"/...\"'). Use relative paths (e.g. '../module/file.html') instead."
+            exit 1
+          fi
+          echo "✅ No broken root href patterns detected."
+
+      - name: Build Verification Status
+        run: echo "🎉 Build check passed. Repository structure is clean and demo-ready!"
