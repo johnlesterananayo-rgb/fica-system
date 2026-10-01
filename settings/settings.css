@@ -1,115 +1,98 @@
-body { font-family: Arial, sans-serif; background:#eef2f7; margin:0; }
+body { margin:0; font-family:Arial,sans-serif; background:#f4f6f9; }
 
 .header {
   background:#007BFF; color:#fff; padding:15px;
-  display:flex; align-items:center;
+  display:flex; justify-content:space-between; align-items:center;
+  border-bottom:6px solid transparent;
+  border-image: linear-gradient(to right, #0056b3, #00c6ff);
+  border-image-slice: 1;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
 }
 .header .logo { height:40px; margin-right:10px; }
+.logout-btn {
+  background:#dc3545; border:none; padding:8px 12px;
+  border-radius:20px; color:#fff; cursor:pointer;
+}
+.logout-btn:hover { background:#c82333; }
 
-.dashboard { display:flex; height:calc(100vh - 60px); }
+.layout { display:flex; height:calc(100vh - 64px); }
 
 .sidebar {
   width:220px; background:#007BFF; color:#fff; padding:20px;
+  border-right:6px solid transparent;
+  border-image: linear-gradient(to bottom, #0056b3, #00c6ff);
+  border-image-slice: 1;
 }
 .sidebar ul { list-style:none; padding:0; margin:0; }
 .sidebar li { margin:12px 0; }
 .sidebar a {
-  display:block; padding:8px 10px;
-  color:#fff; text-decoration:none;
-  border-radius:4px;
+  display:block; padding:10px; color:#fff; text-decoration:none;
+  border-radius:8px; background:linear-gradient(135deg, #0069d9, #0056b3);
+  transition:all 0.3s ease;
 }
-.sidebar a:hover { background:#0056b3; }
-.sidebar a.active { background:#0056b3; }
+.sidebar a:hover {
+  background:linear-gradient(135deg, #00c6ff, #007BFF);
+  transform:translateX(4px);
+}
+.sidebar a.active { background:#fff; color:#007BFF; font-weight:bold; }
 
-.main { flex:1; padding:25px; background:#f4f6f9; }
-
+.main { flex:1; padding:25px; }
 .card {
-  background:#fff; padding:30px; border-radius:10px;
+  background:#fff; padding:20px; border-radius:12px;
   box-shadow:0 4px 12px rgba(0,0,0,0.1);
 }
-.card h2 { margin-top:0; color:#007BFF; }
+.card h2 { color:#007BFF; margin-bottom:20px; }
 
-/* Section styling */
+
+.toggle-btn {
+  width:100%; padding:12px; margin:10px 0;
+  background:linear-gradient(135deg, #0069d9, #0056b3);
+  color:#fff; border:none; border-radius:8px;
+  font-weight:bold; cursor:pointer; text-align:left;
+  transition:all 0.3s ease;
+}
+.toggle-btn:hover {
+  background:linear-gradient(135deg, #00c6ff, #007BFF);
+  transform:translateX(4px);
+}
+
 .settings-section {
-  margin-bottom:20px;
-  padding:15px;
-  border:1px solid #ddd;
-  border-radius:8px;
-  background:#fafafa;
+  margin:15px 0; padding:15px;
+  background:#f9f9f9; border:1px solid #ddd;
+  border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.05);
 }
-.settings-section h3 {
-  margin-top:0; color:#333; border-bottom:1px solid #ddd;
-  padding-bottom:5px; margin-bottom:10px;
-}
-.settings-section label {
-  display:block; margin-top:10px; color:#555;
-}
-.settings-section input, .settings-section select {
+.settings-section h3 { color:#007BFF; margin-bottom:10px; }
+.settings-section label { display:block; margin-top:10px; color:#555; }
+.settings-section input, 
+.settings-section select {
   width:100%; padding:8px; margin-top:5px;
   border:1px solid #ccc; border-radius:6px;
 }
+.settings-section button {
+  margin-top:15px; padding:10px; border:none;
+  border-radius:8px; cursor:pointer; color:#fff;
+  font-weight:bold; width:100%;
+}
 
-/* Custom checkbox design */
-.checkbox-container {
-  display:block;
-  position:relative;
-  padding-left:35px;
-  margin-top:12px;
-  cursor:pointer;
-  font-size:15px;
-  color:#333;
+.save-btn {
+  background:linear-gradient(135deg, #0069d9, #0056b3);
 }
-.checkbox-container input {
-  position:absolute;
-  opacity:0;
-  cursor:pointer;
+.save-btn:hover {
+  background:linear-gradient(135deg, #00c6ff, #007BFF);
 }
-.checkmark {
-  position:absolute;
-  left:0;
-  top:0;
-  height:20px;
-  width:20px;
-  background-color:#eee;
-  border-radius:4px;
-  border:1px solid #ccc;
+.backup-btn {
+  background:#28a745;
 }
-.checkbox-container:hover input ~ .checkmark {
-  background-color:#ddd;
+.backup-btn:hover {
+  background:#218838;
 }
-.checkbox-container input:checked ~ .checkmark {
-  background-color:#007BFF;
-  border:1px solid #0056b3;
+.restore-btn {
+  background:#ffc107; color:#000;
 }
-.checkmark:after {
-  content:"";
-  position:absolute;
+.restore-btn:hover {
+  background:#e0a800; color:#000;
+}
+
+.hidden {
   display:none;
 }
-.checkbox-container input:checked ~ .checkmark:after {
-  display:block;
-}
-.checkbox-container .checkmark:after {
-  left:6px;
-  top:2px;
-  width:6px;
-  height:12px;
-  border:solid white;
-  border-width:0 2px 2px 0;
-  transform:rotate(45deg);
-}
-
-/* Buttons */
-.settings-actions { margin-top:20px; }
-.save-btn {
-  background:#007BFF; color:#fff; border:none;
-  padding:10px 15px; border-radius:6px; cursor:pointer;
-}
-.save-btn:hover { background:#0056b3; }
-
-.cancel-btn {
-  background:#dc3545; color:#fff; border:none;
-  padding:10px 15px; border-radius:6px; cursor:pointer;
-  margin-left:10px;
-}
-.cancel-btn:hover { background:#c82333; }

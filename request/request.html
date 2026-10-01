@@ -1,53 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Request - Fidelis Academy</title>
+  <title>Request</title>
   <link rel="stylesheet" href="request.css">
 </head>
 <body>
-<div class="header">
-  <img src="logo.jpeg" alt="Fidelis Logo" class="logo">
-  <span>FIDELIS CHILDREN'S ACADEMY</span>
-</div>
-
-<div class="dashboard">
-  <div class="sidebar">
-    <ul>
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="request.html">Request</a></li>
-      <li><a href="reports.html">Reports</a></li>
-      <li><a href="student.html">Student</a></li>
-      <li><a href="calendar.html">Calendar</a></li>
-      <li><a href="events.html">Events</a></li>
-      <li><a href="logs.html">Logs</a></li>
-      <li><a href="settings.html">Settings</a></li>
-      <li><a href="logout.html">Logout</a></li>
-    </ul>
+  <div class="header">
+    <img src="logo.jpeg" alt="Fidelis Logo" class="logo">
+    <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
+    <button class="logout-btn">Logout</button>
   </div>
 
-  <div class="main">
-    <div class="card">
-      <h2>Reports Validation Panel</h2>
-      <button class="add-btn">+ Add Request</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Request ID</th>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Request Type</th>
-            <th>Date (MM/DD/YYYY)</th>
-            <th>Priority</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Empty by default. Rows will be added here later -->
-        </tbody>
-      </table>
+  <div class="layout">
+    <div class="sidebar">
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="student.html">Student</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="request.html" class="active">Request</a></li>
+        <li><a href="logs.html">Logs</a></li>
+      </ul>
+    </div>
+
+    <div class="main">
+      <div class="card">
+        <h2>Request Management</h2>
+
+        <button class="add-btn">Add Request</button>
+
+        <div class="request-form hidden">
+          <h3>New Request</h3>
+          <label>Last Name</label>
+          <input type="text" placeholder="Enter last name">
+          <label>First Name</label>
+          <input type="text" placeholder="Enter first name">
+          <label>Middle Name</label>
+          <input type="text" placeholder="Enter middle name">
+          <label>Date Needed</label>
+          <input type="date">
+          <label>Request Type</label>
+          <select>
+            <option>Form 137</option>
+            <option>Form 138</option>
+            <option>Good Moral</option>
+            <option>Certificate of Enrollment</option>
+            <option>Other</option>
+          </select>
+          <button class="save-btn">Save Request</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Request ID</th>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Middle Name</th>
+              <th>Request Type</th>
+              <th>Date Needed</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="requestTableBody">
+
+          </tbody>
+        </table>
+
+      </div>
     </div>
   </div>
-</div>
 </body>
 </html>

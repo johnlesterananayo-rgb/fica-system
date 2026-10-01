@@ -1,98 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Settings - Fidelis Academy</title>
+  <title>Settings</title>
   <link rel="stylesheet" href="settings.css">
 </head>
 <body>
-  <!-- Header -->
   <div class="header">
-    <img src="logo.png" alt="Fidelis Logo" class="logo">
-    <span>FIDELIS CHILDREN'S ACADEMY</span>
+    <img src="logo.jpeg" alt="Fidelis Logo" class="logo">
+    <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
+    <button class="logout-btn">Logout</button>
   </div>
 
-  <div class="dashboard">
-    <!-- Sidebar -->
+  <div class="layout">
     <div class="sidebar">
       <ul>
         <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="request.html">Request</a></li>
-        <li><a href="reports.html">Reports</a></li>
         <li><a href="student.html">Student</a></li>
         <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="logs.html">Logs</a></li>
+        <li><a href="reports.html">Reports</a></li>
         <li><a href="settings.html" class="active">Settings</a></li>
-        <li><a href="logout.html">Logout</a></li>
+        <li><a href="request.html">Request</a></li>
+        <li><a href="logs.html">Logs</a></li>
       </ul>
     </div>
 
-    <!-- Main Settings -->
     <div class="main">
       <div class="card">
         <h2>System Settings</h2>
-        <form>
-          <!-- Section: User Account -->
-          <div class="settings-section">
-            <h3>User Account</h3>
-            <label>Change Password</label>
-            <input type="password" placeholder="New Password">
-            <label>Registrar Name</label>
-            <input type="text" placeholder="Your Name">
-          </div>
 
-          <!-- Section: Notifications -->
-          <div class="settings-section">
-            <h3>Notifications</h3>
-            <label class="checkbox-container">
-              Email alerts for new requests
-              <input type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-            <label class="checkbox-container">
-              SMS alerts for pending approvals
-              <input type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-          </div>
+        <button class="toggle-btn">Change Password</button>
+        <div class="settings-section hidden">
+          <h3>Change Password</h3>
+          <label>Old Password</label>
+          <input type="password" placeholder="Enter old password">
+          <label>New Password</label>
+          <input type="password" placeholder="Enter new password">
+          <label>Confirm New Password</label>
+          <input type="password" placeholder="Re-enter new password">
+          <button class="save-btn">Update Password</button>
+        </div>
 
-          <!-- Section: Data Export -->
-          <div class="settings-section">
-            <h3>Data Export</h3>
-            <label>Default export format</label>
-            <select>
-              <option>PDF</option>
-              <option>Excel</option>
-              <option>CSV</option>
-            </select>
-          </div>
+        <button class="toggle-btn">Theme</button>
+        <div class="settings-section hidden">
+          <h3>Theme</h3>
+          <label>Select Theme</label>
+          <select>
+            <option>White Mode</option>
+            <option>Dark Mode</option>
+          </select>
+          <button class="save-btn">Apply Theme</button>
+        </div>
 
-          <!-- Section: Academic Year -->
-          <div class="settings-section">
-            <h3>Academic Year</h3>
-            <label>Start Date</label>
-            <input type="date">
-            <label>End Date</label>
-            <input type="date">
-          </div>
+        <button class="toggle-btn">Notifications</button>
+        <div class="settings-section hidden">
+          <h3>Notifications</h3>
+          <label>Enable Notifications</label>
+          <select>
+            <option>Enabled</option>
+            <option>Disabled</option>
+          </select>
+          <button class="save-btn">Update Notifications</button>
+        </div>
 
-          <!-- Section: Security -->
-          <div class="settings-section">
-            <h3>Security</h3>
-            <label>Session Timeout (minutes)</label>
-            <input type="number" value="30">
-            <label class="checkbox-container">
-              Enable Two-Factor Authentication
-              <input type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-          </div>
+        <button class="toggle-btn">System</button>
+        <div class="settings-section hidden">
+          <h3>System</h3>
+          <label>Backup Data</label>
+          <button class="backup-btn">Backup Now</button>
+          <label>Restore Data</label>
+          <button class="restore-btn">Restore</button>
+        </div>
 
-          <!-- Buttons -->
-          <div class="settings-actions">
-            <button class="save-btn">Save Settings</button>
-            <button class="cancel-btn" type="reset">Cancel</button>
-          </div>
-        </form>
       </div>
     </div>
   </div>
