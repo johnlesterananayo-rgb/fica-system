@@ -21,10 +21,38 @@ def _names(n, names=None):
         return list(names[:n])
     return [f"Section {string.ascii_uppercase[i]}" for i in range(n)]
 
+def validate_students(students):
+    """Data hygiene guard: raise ValueError if the roster would break section distribution."""
+    problems = []
+
+    # 1) Gender must be exactly "Male" or "Female" (null, missing, blank, or odd values all fail)
+    bad_gender = [s for s in students if s.get("gender") not in ("Male", "Female")]
+    if bad_gender:
+        who = ", ".join(str(s.get("lrn") or s.get("id")) for s in bad_gender[:5])
+        more = f" (+{len(bad_gender) - 5} more)" if len(bad_gender) > 5 else ""
+        problems.append(f"{len(bad_gender)} student(s) have missing/invalid gender: {who}{more}")
+
+    # 2) Duplicate LRNs (only checked when the rows carry an 'lrn' key)
+    seen, dupes = {}, set()
+    for s in students:
+        lrn = str(s.get("lrn") or "").strip()
+        if not lrn:
+            continue
+        if lrn in seen:
+            dupes.add(lrn)
+        seen[lrn] = True
+    if dupes:
+        shown = ", ".join(sorted(dupes)[:5])
+        more = f" (+{len(dupes) - 5} more)" if len(dupes) > 5 else ""
+        problems.append(f"{len(dupes)} duplicate LRN(s): {shown}{more}")
+
+    if problems:
+        raise ValueError("Fix these records before generating sections: " + "; ".join(problems))
 
 def generate_sections(students, capacity, num_sections=None, section_names=None):
     if capacity < 1:
         raise ValueError("capacity must be at least 1")
+    validate_students(students)  # hygiene guard: runs before any distribution
     n = len(students)
     if n == 0:
         return {"sections": [], "unassigned": [], "notes": ["No students to assign."]}
