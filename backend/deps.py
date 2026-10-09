@@ -1,7 +1,12 @@
 """Shared Supabase client + login check."""
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import HTTPException
 from supabase import create_client
+
+# Load the local backend/.env before initializing the Supabase client.
+load_dotenv(Path(__file__).with_name(".env"))
 
 sb = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"])
 

@@ -1,156 +1,142 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>School Calendar</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar - Fidelis Academy</title>
     <link rel="stylesheet" href="calendar.css" />
+    <link rel="stylesheet" href="../css/fica-shared.css" />
+    <script src="../js/supabase.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/pages.js" defer></script>
   </head>
-  <body>
+  <body data-page="calendar">
     <div class="header">
-      <img src="logo.jpeg" alt="Fidelis Logo" class="logo" />
-      <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
-      <button class="logout-btn">Logout</button>
+      <div class="header-left">
+        <img src="logo.jpeg" alt="Fidelis Academy logo" class="logo" />
+      </div>
+      <div class="header-center"><span>FIDELIS CHILDREN'S ACADEMY</span></div>
+      <div class="header-right">
+        <button
+          class="ai-btn"
+          type="button"
+          aria-label="Open AI assistant"
+          onclick="document.getElementById('chatbox').classList.toggle('show')"
+        >
+          <img src="ailogo.jpeg" alt="AI assistant" class="ailogo" />
+        </button>
+      </div>
     </div>
-
-    <div class="layout">
+    <div class="dashboard">
       <div class="sidebar">
         <ul>
           <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
-          <li><a href="../student/student.html">Student</a></li>
+          <li><a href="../student/student.html">Students</a></li>
           <li>
             <a href="../calendar/calendar.html" class="active">Calendar</a>
           </li>
           <li><a href="../reports/reports.html">Reports</a></li>
-          <li><a href="../settings/settings.html">Settings</a></li>
-          <li><a href="../request/request.html">Request</a></li>
+          <li><a href="../request/request.html">Requests</a></li>
           <li><a href="../logs/logs.html">Logs</a></li>
+          <li><a href="../settings/settings.html">Settings</a></li>
         </ul>
       </div>
-
-      <div class="main">
+      <main class="main">
         <div class="card">
-          <h2>School Calendar</h2>
-          <button class="add-btn">+ Add Event</button>
-
-          <div class="calendar-container">
-            <div class="calendar-header">
-              <button class="prev">◀</button>
-              <span class="month-year">October 2026</span>
-              <button class="next">▶</button>
+          <div class="page-heading">
+            <div>
+              <h2>School Calendar</h2>
+              <p class="muted">
+                Configured school milestones and important dates.
+              </p>
             </div>
-
-            <table class="calendar-grid">
-              <thead>
-                <tr>
-                  <th>Su</th>
-                  <th>Mo</th>
-                  <th>Tu</th>
-                  <th>We</th>
-                  <th>Th</th>
-                  <th>Fr</th>
-                  <th>Sa</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="prev-month">27</td>
-                  <td class="prev-month">28</td>
-                  <td class="prev-month">29</td>
-                  <td class="prev-month">30</td>
-                  <td>1</td>
-                  <td class="today">2</td>
-                  <td>3</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>9</td>
-                  <td>10</td>
-                </tr>
-                <tr>
-                  <td>11</td>
-                  <td>12</td>
-                  <td>13</td>
-                  <td>14</td>
-                  <td>15</td>
-                  <td>16</td>
-                  <td>17</td>
-                </tr>
-                <tr>
-                  <td>18</td>
-                  <td>19</td>
-                  <td>20</td>
-                  <td>21</td>
-                  <td>22</td>
-                  <td>23</td>
-                  <td>24</td>
-                </tr>
-                <tr>
-                  <td>25</td>
-                  <td>26</td>
-                  <td>27</td>
-                  <td>28</td>
-                  <td>29</td>
-                  <td>30</td>
-                  <td>31</td>
-                </tr>
-                <tr>
-                  <td class="next-month">1</td>
-                  <td class="next-month">2</td>
-                  <td class="next-month">3</td>
-                  <td class="next-month">4</td>
-                  <td class="next-month">5</td>
-                  <td class="next-month">6</td>
-                  <td class="next-month">7</td>
-                </tr>
-              </tbody>
-            </table>
+            <button class="add-event-btn" id="refresh-calendar" type="button">
+              Refresh Milestones
+            </button>
           </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="eventTableBody"></tbody>
-          </table>
+          <div class="separator"></div>
+          <div
+            id="page-message"
+            class="status-message"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+          <div class="calendar-header">
+            <div class="calendar-note">
+              Milestones are maintained in the backend configuration.
+            </div>
+            <div class="month-nav">
+              <button class="nav-btn" id="calendar-prev" type="button">
+                Prev</button
+              ><span class="month-title" id="calendar-month-title"
+                >Loading…</span
+              ><button class="nav-btn" id="calendar-next" type="button">
+                Next
+              </button>
+            </div>
+          </div>
+          <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div
+            class="days"
+            id="calendar-days"
+            aria-label="Calendar dates"
+          ></div>
+          <div class="event-table">
+            <h3>Milestone List</h3>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Milestone</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="events-body">
+                  <tr>
+                    <td colspan="4">Loading milestones…</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
-
-    <div id="eventForm" class="popup">
-      <div class="popup-content">
-        <h3>Add Event</h3>
-        <label>Title</label><input type="text" id="eventTitle" />
-        <label>Date</label><input type="date" id="eventDate" />
-        <label>Time</label><input type="time" id="eventTime" />
-        <label>Description</label><textarea id="eventDescription"></textarea>
-        <button>Save</button>
-        <button class="cancel-btn">Cancel</button>
+    <div id="chatbox" class="chat-side" aria-label="AI assistant panel">
+      <div class="chat-header">
+        <span>AI Assistant</span
+        ><button
+          class="close-btn"
+          type="button"
+          aria-label="Close assistant"
+          onclick="document.getElementById('chatbox').classList.remove('show')"
+        >
+          ×
+        </button>
       </div>
-    </div>
-
-    <div id="eventDetail" class="popup">
-      <div class="popup-content">
-        <h3>Event Details</h3>
-        <p><strong>Title:</strong> <span id="detailTitle"></span></p>
-        <p><strong>Date:</strong> <span id="detailDate"></span></p>
-        <p><strong>Time:</strong> <span id="detailTime"></span></p>
+      <div class="chat-messages">
         <p>
-          <strong>Description:</strong> <span id="detailDescription"></span>
+          <strong>AI:</strong> Hello! I can help with navigation, but this
+          assistant is not connected to an AI service yet.
         </p>
-        <div class="action-buttons">
-          <button class="edit">Edit</button>
-          <button class="delete">Delete</button>
-          <button class="close">Close</button>
-        </div>
+      </div>
+      <div class="chat-input">
+        <input
+          type="text"
+          placeholder="Type your message..."
+          aria-label="Message"
+        /><button class="send-btn" type="button">Send</button>
       </div>
     </div>
   </body>

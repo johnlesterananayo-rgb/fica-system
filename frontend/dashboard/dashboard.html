@@ -1,56 +1,70 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Registrar Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css" />
-  </head>
-  <body>
-    <!-- HEADER -->
-    <div class="header">
-      <img src="logo.jpeg" alt="Fidelis Logo" class="logo" />
-      <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
-      <button class="logout-btn">Logout</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Fidelis Academy</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="../css/fica-shared.css">
+  <script src="../js/supabase.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/pages.js" defer></script>
+</head>
+<body data-page="dashboard">
+  <div class="header">
+    <div class="header-left"><img src="logo.jpeg" alt="Fidelis Academy logo" class="logo"></div>
+    <div class="header-center"><span>FIDELIS CHILDREN'S ACADEMY</span></div>
+    <div class="header-right"><button class="ai-btn" type="button" aria-label="Open AI assistant" onclick="document.getElementById('chatbox').classList.toggle('show')"><img src="ailogo.jpeg" alt="AI assistant" class="ailogo"></button></div>
+  </div>
+  <div class="dashboard">
+
+    <div class="sidebar">
+      <ul>
+        <li><a href="../dashboard/dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="../student/student.html" >Students</a></li>
+        <li><a href="../calendar/calendar.html" >Calendar</a></li>
+        <li><a href="../reports/reports.html" >Reports</a></li>
+        <li><a href="../request/request.html" >Requests</a></li>
+        <li><a href="../logs/logs.html" >Logs</a></li>
+        <li><a href="../settings/settings.html" >Settings</a></li>
+      </ul>
     </div>
-
-    <div class="layout">
-      <div class="sidebar">
-        <ul>
-          <li>
-            <a href="../dashboard/dashboard.html" class="active">Dashboard</a>
-          </li>
-          <li><a href="../request/request.html">Request</a></li>
-          <li><a href="../reports/reports.html">Reports</a></li>
-          <li><a href="../student/student.html">Student</a></li>
-          <li><a href="../calendar/calendar.html">Calendar</a></li>
-          <li><a href="../logs/logs.html">Logs</a></li>
-          <li><a href="../settings/settings.html">Settings</a></li>
-          <li><a href="../logout/logout.html">Logout</a></li>
-        </ul>
-      </div>
-
-      <div class="main">
-        <h2>Registrar Dashboard</h2>
-
-        <div class="summary">
-          <div class="box">
-            Total Students<br /><span id="studentCount">0</span>
-          </div>
-          <div class="box">
-            Pending Requests<br /><span id="requestCount">0</span>
-          </div>
-          <div class="box">
-            Reports Generated<br /><span id="reportCount">0</span>
-          </div>
-          <div class="box">
-            Upcoming Events<br /><span id="eventCount">0</span>
-          </div>
+    <main class="main">
+      <div class="card">
+        <h2>Dashboard Overview</h2><div class="separator"></div>
+        <div id="page-message" class="status-message" role="status" aria-live="polite" hidden></div>
+        <div class="metrics">
+          <div class="metric"><h3>Total Students</h3><p id="metric-students">—</p></div>
+          <div class="metric"><h3>Open Requests</h3><p id="metric-requests">—</p></div>
+          <div class="metric"><h3>Retention Risk Flags</h3><p id="metric-risk">—</p></div>
+          <div class="metric"><h3>Upcoming Milestones</h3><p id="metric-events">—</p></div>
         </div>
-
-        <div class="card">
-          <h3>Recent Activity</h3>
-          <p>No activity yet.</p>
+        <div class="filters">
+          <label>Grade level<select id="dashboard-grade"><option value="all">All grades</option><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option><option>Grade 5</option><option>Grade 6</option></select></label>
+          <label>Forecast horizon<select id="dashboard-horizon"><option value="1">1 year</option><option value="2">2 years</option><option value="3">3 years</option></select></label>
+          <label>Risk threshold<select id="dashboard-threshold"><option value="0.70">70%</option><option value="0.85" selected>85%</option><option value="0.95">95%</option></select></label>
+          <label>Student status<select id="dashboard-status"><option value="all">All statuses</option><option>Enrolled</option><option>Promoted</option><option>Transferred Out</option><option>Dropped</option><option>Graduated</option></select></label>
         </div>
+        <div class="chart-card">
+          <h3>Student Status Distribution</h3>
+          <div id="student-status-chart" class="pie-chart" role="img" aria-label="Student status distribution"></div>
+          <ul class="legend">
+            <li><span class="color-box enrolled"></span> Enrolled</li>
+            <li><span class="color-box transferred"></span> Transferred Out</li>
+            <li><span class="color-box dropout"></span> Dropped / Graduated</li>
+          </ul>
+          <p id="chart-summary" class="muted"></p>
+        </div>
+        <div class="insights-section"><h3>Enrollment Forecast</h3><div id="forecast-summary" class="report-results">Loading forecast…</div></div>
+        <div class="events-section"><h3>Upcoming School Milestones</h3><div class="separator"></div><ul class="events-list" id="upcoming-events"><li>Loading milestones…</li></ul></div>
+        <div class="activity-card"><h3>Recent Activity</h3><ul class="activity-list" id="recent-activity"><li>Loading activity…</li></ul></div>
       </div>
-    </div>
-  </body>
+    </main>
+  </div>
+  <div id="chatbox" class="chat-side" aria-label="AI assistant panel">
+    <div class="chat-header"><span>AI Assistant</span><button class="close-btn" type="button" aria-label="Close assistant" onclick="document.getElementById('chatbox').classList.remove('show')">×</button></div>
+    <div class="chat-messages"><p><strong>AI:</strong> Hello! I can help with navigation, but this assistant is not connected to an AI service yet.</p></div>
+    <div class="chat-input"><input type="text" placeholder="Type your message..." aria-label="Message"><button class="send-btn" type="button">Send</button></div>
+  </div>
+</body>
 </html>

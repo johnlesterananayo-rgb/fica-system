@@ -3,6 +3,7 @@ FICA backend service.  Run:  uvicorn api:app --reload --port 8001
 Env (.env, never commit): SUPABASE_URL, SUPABASE_SERVICE_KEY, FRONTEND_ORIGIN
 """
 import os
+import re
 from collections import defaultdict
 from datetime import date, datetime, timezone
 
@@ -10,7 +11,7 @@ from typing import Literal
 from uuid import UUID
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from analytics import forecast_enrollment, risk_flags
 from deps import log_action, require_login, sb
@@ -18,9 +19,20 @@ from sections import generate_sections
 from students import router as students_router
 
 app = FastAPI(title="FICA Backend")
+_configured_origins = [
+    origin.strip()
+    for origin in os.environ.get("FRONTEND_ORIGIN", "").split(",")
+    if origin.strip()
+]
+# Both Localhost and 127.0.0.1 are commonly used by VS Code Live Server.
+_dev_origins = ["http://localhost:5500", "http://127.0.0.1:5500"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.environ.get("FRONTEND_ORIGIN", "http://localhost:5500")],
+    allow_origins=sorted(set(_dev_origins + _configured_origins)),
+    # Live Server often increments the port (e.g. 5501 if 5500 is occupied).
+    # This regex permits only localhost/127.0.0.1 origins in development;
+    # deployed frontend origins should be listed explicitly in FRONTEND_ORIGIN.
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -219,3 +231,111 @@ def calendar(year: int | None = None, authorization: str | None = Header(None)):
     """Dashboard calendar: deadline labels, date ranges and years, ready for the frontend."""
     require_login(authorization)
     return build_calendar(MILESTONES, date.today(), year)
+# ---------------------------------------------------------------- STUDENT GRADES
+class GradeIn(BaseModel):
+    school_year: str = Field(pattern=r"^\d{4}-\d{4}$")
+    subject: str = Field(min_length=1, max_length=80)
+    quarter: int = Field(ge=1, le=4)
+    grade: float = Field(ge=0, le=100)
+
+@app.get("/students/{student_id}/grades")
+def list_student_grades(
+    student_id: UUID,
+    school_year: str | None = None,
+    authorization: str | None = Header(None),
+):
+    """List grade rows for a student, optionally filtered by school year."""
+    require_login(authorization)
+    found = sb.table("students").select("id").eq("id", str(student_id)).execute().data
+    if not found:
+        raise HTTPException(404, "Student not found")
+    query = sb.table("grades").select("id,student_id,school_year,subject,quarter,grade,created_at").eq("student_id", str(student_id))
+    if school_year:
+        if not re.fullmatch(r"\d{4}-\d{4}", school_year):
+            raise HTTPException(400, "school_year must use YYYY-YYYY format")
+        query = query.eq("school_year", school_year)
+    return query.order("subject").order("quarter").execute().data
+
+@app.post("/students/{student_id}/grades", status_code=200)
+def save_student_grade(
+    student_id: UUID,
+    body: GradeIn,
+    authorization: str | None = Header(None),
+):
+    """Insert or update one student's subject/quarter grade for a school year."""
+    uid = require_login(authorization)
+    if int(body.school_year.split("-")[1]) != int(body.school_year.split("-")[0]) + 1:
+        raise HTTPException(400, "school_year must describe consecutive academic years, e.g. 2026-2027")
+    found = sb.table("students").select("id,lrn").eq("id", str(student_id)).execute().data
+    if not found:
+        raise HTTPException(404, "Student not found")
+    query = (
+        sb.table("grades").select("id")
+        .eq("student_id", str(student_id))
+        .eq("school_year", body.school_year)
+        .eq("subject", body.subject.strip())
+        .eq("quarter", body.quarter)
+    )
+    existing = query.execute().data
+    values = {"grade": body.grade, "subject": body.subject.strip()}
+    try:
+        if existing:
+            result = sb.table("grades").update(values).eq("id", existing[0]["id"]).execute()
+        else:
+            values.update({"student_id": str(student_id), "school_year": body.school_year, "quarter": body.quarter})
+            result = sb.table("grades").insert(values).execute()
+    except Exception:
+        raise HTTPException(400, "Could not save grade")
+    if not result.data:
+        raise HTTPException(400, "Could not save grade")
+    log_action(uid, f"Saved grade for student {found[0]['lrn']} ({body.subject}, Q{body.quarter}, {body.school_year})")
+    return result.data[0]
+
+# ---------------------------------------------------------------- ACTIVITY LOGS
+@app.get("/logs")
+def list_activity_logs(limit: int = 100, authorization: str | None = Header(None)):
+    """Return recent registrar audit events for the Logs page and dashboard."""
+    require_login(authorization)
+    safe_limit = min(max(limit, 1), 200)
+    try:
+        rows = (
+            sb.table("activity_logs")
+            .select("id,registrar_id,action,created_at,registrars(full_name,email)")
+            .order("created_at", desc=True)
+            .range(0, safe_limit - 1)
+            .execute()
+            .data
+        )
+    except Exception:
+        raise HTTPException(500, "Could not load activity logs")
+    cleaned = []
+    for row in rows:
+        registrar = row.pop("registrars", None) or {}
+        row["registrar_name"] = registrar.get("full_name")
+        row["email"] = registrar.get("email")
+        cleaned.append(row)
+    return cleaned
+
+# ---------------------------------------------------------------- LIST REQUESTS
+@app.get("/requests")
+def list_requests(status: Literal["Ongoing", "Completed", "Removed"] | None = None,
+                  authorization: str | None = Header(None)):
+    """Request page data: priority, status and the dates, newest first. ?status= filters."""
+    require_login(authorization)
+    q = (
+        sb.table("requests")
+        .select("id,priority,status,remarks,created_at,completed_at,removed_at,student_id,record_type_id,"
+                "students(lrn,first_name,last_name),record_types(type_name)")
+        .eq("is_archived", False)
+        .order("created_at", desc=True)
+    )
+    if status:
+        q = q.eq("status", status)
+    rows = q.execute().data
+    for r in rows:
+        st = r.pop("students", None) or {}
+        rt = r.pop("record_types", None) or {}
+        r["student_lrn"] = st.get("lrn")
+        r["student_name"] = f"{st.get('first_name', '')} {st.get('last_name', '')}".strip() or None
+        r["type_name"] = rt.get("type_name")
+    return rows

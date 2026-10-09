@@ -1,62 +1,35 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Logout</title>
-    <!-- Connector to CSS -->
-    <link rel="stylesheet" href="logout.css" />
-  </head>
-  <body>
-    <div class="header">
-      <img src="logo.jpeg" alt="Fidelis Logo" class="logo" />
-      <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
-      <button
-        class="logout-btn"
-        onclick="
-          document.getElementById('logoutPopup').classList.remove('hidden')
-        "
-      >
-        Logout
-      </button>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logout - Fidelis Academy</title>
+  <link rel="stylesheet" href="logout.css">
+  <link rel="stylesheet" href="../css/fica-shared.css">
+  <script src="../js/supabase.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/pages.js" defer></script>
+</head>
+<body data-page="logout">
+  <div class="header">
+    <div class="header-left"><img src="logo.jpeg" alt="Fidelis Academy logo" class="logo"></div>
+    <div class="header-center"><span>FIDELIS CHILDREN'S ACADEMY</span></div>
+    <div class="header-right"></div>
+  </div>
+  <div class="dashboard">
 
     <div class="sidebar">
       <ul>
-        <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
-        <li><a href="../student/student.html">Student</a></li>
-        <li><a href="../calendar/calendar.html">Calendar</a></li>
-        <li><a href="../reports/reports.html">Reports</a></li>
-        <li><a href="../logs/logs.html">Logs</a></li>
-        <li><a href="../settings/settings.html">Settings</a></li>
+        <li><a href="../dashboard/dashboard.html" >Dashboard</a></li>
+        <li><a href="../student/student.html" >Students</a></li>
+        <li><a href="../calendar/calendar.html" >Calendar</a></li>
+        <li><a href="../reports/reports.html" >Reports</a></li>
+        <li><a href="../request/request.html" >Requests</a></li>
+        <li><a href="../logs/logs.html" >Logs</a></li>
+        <li><a href="../settings/settings.html" >Settings</a></li>
       </ul>
     </div>
-
-    <!-- Logout Popup -->
-    <div id="logoutPopup" class="popup hidden">
-      <div class="popup-content">
-        <h3>Do you want to logout?</h3>
-        <div class="popup-actions">
-          <button
-            class="cancel-btn"
-            onclick="
-              document.getElementById('logoutPopup').classList.add('hidden')
-            "
-          >
-            Cancel
-          </button>
-          <button class="confirm-btn">Yes</button>
-        </div>
-      </div>
-    </div>
-    <script src="../js/supabase.js"></script>
-    <script src="../js/api.js"></script>
-    <script>
-      initPage(); // login guard
-      // Show the question as soon as this page opens.
-      document.getElementById("logoutPopup").classList.remove("hidden");
-      document.querySelector(".confirm-btn").addEventListener("click", signOut);
-      document.querySelector(".cancel-btn").addEventListener("click", () => {
-        window.location.href = FICA.HOME_PAGE;
-      });
-    </script>
-  </body>
+    <main class="main"><div class="card logout-card"><h2>Sign Out</h2><p>Do you want to end your current session?</p><div class="popup-actions"><button class="cancel-btn" id="cancel-logout" type="button">Cancel</button><button class="confirm-btn" id="confirm-logout" type="button">Yes, Logout</button></div><p id="logout-message" class="inline-message" role="status" aria-live="polite"></p></div></main>
+  </div>
+</body>
 </html>

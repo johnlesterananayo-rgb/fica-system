@@ -64,11 +64,21 @@ async function api(path, options = {}) {
   }
   const headers = { Authorization: "Bearer " + data.session.access_token };
   if (options.body) headers["Content-Type"] = "application/json";
-  const res = await fetch(FICA.API_URL + path, {
-    method: options.method || "GET",
-    headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
+  let res;
+  try {
+    res = await fetch(FICA.API_URL + path, {
+      method: options.method || "GET",
+      headers,
+      body: options.body ? JSON.stringify(options.body) : undefined,
+    });
+  } catch (networkError) {
+    console.error("FICA API network/CORS failure:", networkError);
+    throw new Error(
+      "Cannot reach the FICA API at " + FICA.API_URL +
+      ". Confirm FastAPI is running on port 8001 and restart it after updating CORS. " +
+      "If the browser is using Live Server, its localhost/127.0.0.1 origin must be allowed."
+    );
+  }
   let body = null;
   try {
     body = await res.json();

@@ -1,0 +1,246 @@
+/* FICA shared interface layer. Loaded after each page's existing stylesheet. */
+:root {
+  --fica-blue: #0878ed;
+  --fica-blue-dark: #0758b5;
+  --fica-blue-soft: #eaf3ff;
+  --fica-border: #dfe6ef;
+  --fica-text: #1f2937;
+  --fica-muted: #667085;
+  --fica-surface: #ffffff;
+  --fica-background: #f3f6fb;
+  --fica-radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body:not([data-page="login"]) {
+  margin: 0;
+  color: var(--fica-text);
+  background: var(--fica-background);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* A compact, symmetric header. Grid keeps the school name truly centered. */
+.header {
+  display: grid !important;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 76px;
+  height: auto !important;
+  padding: 12px 22px !important;
+  background: var(--fica-blue);
+  color: #fff;
+  border: 0 !important;
+  border-bottom: 3px solid var(--fica-blue-dark) !important;
+  border-image: none !important;
+  box-shadow: 0 2px 8px rgba(18, 56, 105, .12);
+}
+.header-left, .header-center, .header-right {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.header-left { justify-content: flex-start; }
+.header-center { justify-content: center; text-align: center; }
+.header-center span {
+  color: #fff;
+  font-size: clamp(13px, 1.15vw, 18px);
+  line-height: 1.25;
+  font-weight: 750;
+  letter-spacing: .025em;
+  text-align: center;
+}
+.header-right { justify-content: flex-end; }
+.header .logo, .header-left .logo {
+  display: block;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  margin: 0 !important;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  border: 2px solid rgba(255,255,255,.95);
+}
+.header .ai-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+.header .ailogo, .header .ai-icon {
+  display: block;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px;
+  max-width: 38px !important;
+  min-height: 38px;
+  max-height: 38px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Consistent app shell across all logged-in pages. */
+.dashboard {
+  display: flex;
+  align-items: stretch;
+  min-height: calc(100vh - 76px);
+  height: auto !important;
+}
+.sidebar {
+  flex: 0 0 220px;
+  width: 220px;
+  min-width: 0;
+  padding: 18px 14px !important;
+  background: var(--fica-blue);
+  border-right: 3px solid var(--fica-blue-dark) !important;
+  border-image: none !important;
+}
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar li { margin: 0 0 8px !important; }
+.sidebar a {
+  display: block;
+  padding: 10px 12px !important;
+  color: #fff;
+  background: rgba(0, 62, 145, .32) !important;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px !important;
+  text-decoration: none;
+  transition: background .15s ease, transform .15s ease;
+}
+.sidebar a:hover { background: rgba(255,255,255,.18) !important; transform: translateX(2px); }
+.sidebar a.active { background: var(--fica-blue-dark) !important; border-color: rgba(255,255,255,.2); }
+.main {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 22px !important;
+  overflow: auto;
+  background: var(--fica-background) !important;
+}
+.main > .card, .main .card {
+  min-width: 0;
+  background: var(--fica-surface);
+  border: 1px solid var(--fica-border) !important;
+  border-radius: var(--fica-radius) !important;
+  box-shadow: 0 4px 18px rgba(20, 45, 80, .045);
+}
+.main .card { padding: 22px; }
+.main .card h2 { color: var(--fica-blue-dark); }
+.separator { height: 3px !important; margin: 12px 0 18px !important; background: var(--fica-blue) !important; border-radius: 3px; }
+
+.metric, .chart-card, .activity-card, .event-table, .insights-section, .events-section {
+  border-radius: 10px;
+}
+.metric { border-color: var(--fica-border) !important; }
+.metric h3 { color: var(--fica-blue-dark); }
+.filters { gap: 12px; }
+.filters label { color: #475467; }
+.filters select, .filters input, .table-toolbar input, .table-toolbar select,
+.setting-item input, .setting-item select, .main input, .main select, .main textarea {
+  max-width: 100%;
+  border-color: #cbd5e1;
+  border-radius: 7px;
+}
+.main button, .popup-content button {
+  transition: filter .15s ease, transform .15s ease;
+}
+.main button:hover, .popup-content button:hover { filter: brightness(.97); }
+.main button:focus-visible, .sidebar a:focus-visible, .popup-content button:focus-visible {
+  outline: 3px solid rgba(8, 120, 237, .35);
+  outline-offset: 2px;
+}
+.status-message { border-radius: 8px !important; }
+.table-scroll { max-width: 100%; }
+
+/* Login is intentionally a centered, stand-alone screen. */
+body[data-page="login"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  height: auto;
+  margin: 0;
+  padding: 24px;
+  overflow: auto;
+  background-color: #e8edf6;
+  background-image: linear-gradient(135deg, #eaf3ff 0%, #f4f7fc 52%, #e8f5ed 100%);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+body[data-page="login"] .overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 18% 15%, rgba(8,120,237,.10), transparent 36%);
+  pointer-events: none;
+}
+body[data-page="login"] .login-container {
+  position: relative;
+  z-index: 1;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: min(100%, 420px) !important;
+  margin: auto !important;
+  padding: 32px !important;
+  border: 1px solid #e1e8f0;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(20, 45, 80, .14);
+  text-align: center;
+  background: #fff;
+}
+body[data-page="login"] .logo-circle {
+  display: block;
+  width: 76px !important;
+  height: 76px !important;
+  max-width: 76px;
+  max-height: 76px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+body[data-page="login"] .login-container h2 {
+  margin: 12px 0 6px;
+  color: var(--fica-blue-dark);
+  font-size: 20px;
+  line-height: 1.35;
+}
+body[data-page="login"] .login-subtitle { color: var(--fica-muted); margin: 0; }
+body[data-page="login"] #login-form { width: 100%; }
+body[data-page="login"] #login-form input { width: 100%; min-height: 42px; }
+body[data-page="login"] #login-form button { min-height: 44px; border-radius: 8px; }
+
+@media (max-width: 800px) {
+  .header { grid-template-columns: 40px minmax(0, 1fr) 40px; min-height: 68px; padding: 10px 12px !important; gap: 8px; }
+  .header .logo, .header-left .logo { width: 38px !important; height: 38px !important; min-width: 38px; max-width: 38px !important; max-height: 38px !important; }
+  .header .ai-btn { flex-basis: 38px; width: 38px !important; height: 38px !important; min-width: 38px; min-height: 38px; }
+  .header .ailogo, .header .ai-icon { width: 34px !important; height: 34px !important; min-width: 34px; max-width: 34px !important; min-height: 34px; max-height: 34px !important; }
+  .dashboard { display: block; min-height: calc(100vh - 68px); }
+  .sidebar { width: 100%; padding: 8px 10px !important; border-right: 0 !important; border-bottom: 3px solid var(--fica-blue-dark) !important; }
+  .sidebar ul { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sidebar li { margin: 0 !important; }
+  .sidebar a { padding: 8px 10px !important; }
+  .main { padding: 12px !important; }
+  .main .card { padding: 16px; }
+}
+@media (max-width: 520px) {
+  body[data-page="login"] { padding: 14px; }
+  body[data-page="login"] .login-container { padding: 24px !important; }
+  .header-center span { font-size: 12px; }
+}

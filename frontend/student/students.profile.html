@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - Fidelis Academy</title>
+  <link rel="stylesheet" href="students.css">
+  <link rel="stylesheet" href="../css/fica-shared.css">
+  <script src="../js/supabase.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/pages.js" defer></script>
+</head>
+<body data-page="student-profile">
+  <div class="header">
+    <div class="header-left"><img src="logo.jpeg" alt="Fidelis Academy logo" class="logo"></div>
+    <div class="header-center"><span>FIDELIS CHILDREN'S ACADEMY</span></div>
+    <div class="header-right"><button class="ai-btn" type="button" aria-label="Open AI assistant" onclick="document.getElementById('chatbox').classList.toggle('show')"><img src="ailogo.jpeg" alt="AI assistant" class="ailogo"></button></div>
+  </div>
+  <div class="dashboard">
+
+    <div class="sidebar">
+      <ul>
+        <li><a href="../dashboard/dashboard.html" >Dashboard</a></li>
+        <li><a href="../student/student.html" class="active">Students</a></li>
+        <li><a href="../calendar/calendar.html" >Calendar</a></li>
+        <li><a href="../reports/reports.html" >Reports</a></li>
+        <li><a href="../request/request.html" >Requests</a></li>
+        <li><a href="../logs/logs.html" >Logs</a></li>
+        <li><a href="../settings/settings.html" >Settings</a></li>
+      </ul>
+    </div>
+    <main class="main"><div class="card profile-card">
+      <div class="page-heading"><div><h2>Student Profile</h2><p class="muted">Student information and academic grades.</p></div><a class="cancel-btn button-link" href="student.html">← Back to Students</a></div><div class="separator"></div>
+      <div id="page-message" class="status-message" role="status" aria-live="polite" hidden></div>
+      <div class="profile-header"><img src="logo.jpeg" alt="Student profile placeholder" class="profile-photo" id="student-photo"><div class="profile-info">
+        <h3 id="profile-full-name">Loading profile…</h3><p><strong>LRN:</strong> <span id="profile-lrn">—</span></p><p><strong>Age:</strong> <span id="profile-age">—</span></p><p><strong>Sex:</strong> <span id="profile-gender">—</span></p><p><strong>Grade:</strong> <span id="profile-grade">—</span></p><p><strong>Section:</strong> <span id="profile-section">—</span></p><p><strong>Status:</strong> <span id="profile-status">—</span></p><p><strong>Address:</strong> <span id="profile-address">—</span></p>
+      </div></div>
+      <p class="muted">Profile photo uploads are not available in the current backend schema.</p>
+      <div class="profile-actions"><button class="action-btn" id="open-edit-profile" type="button">Edit Profile</button><button class="action-btn" id="open-grade-popup" type="button">Add / Edit Grade</button><button class="delete-btn" id="archive-profile" type="button">Archive Student</button></div>
+      <div class="grades-section"><div class="page-heading"><h3>Grades</h3><label>School Year <input id="grades-school-year" type="text" pattern="[0-9]{4}-[0-9]{4}" placeholder="2026-2027" aria-label="Grades school year"></label></div>
+        <div class="table-scroll"><table class="grades-table"><thead><tr><th>Subject</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th></tr></thead><tbody id="grades-body"><tr data-subject="Mother Tongue"><th scope="row">Mother Tongue</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="Filipino"><th scope="row">Filipino</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="English"><th scope="row">English</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="Mathematics"><th scope="row">Mathematics</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="Science"><th scope="row">Science</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="Araling Panlipunan (AP)"><th scope="row">Araling Panlipunan (AP)</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="Edukasyon sa Pagpapakatao (EsP)"><th scope="row">Edukasyon sa Pagpapakatao (EsP)</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="MAPEH"><th scope="row">MAPEH</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr><tr data-subject="EPP / TLE"><th scope="row">EPP / TLE</th><td data-quarter="1">—</td><td data-quarter="2">—</td><td data-quarter="3">—</td><td data-quarter="4">—</td></tr></tbody></table></div>
+      </div>
+    </div></main>
+  </div>
+  <div id="edit-profile-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="edit-profile-title"><div class="popup-content"><button class="modal-close close-btn" type="button" data-close="edit-profile-popup" aria-label="Close">×</button><h3 id="edit-profile-title">Edit Profile</h3><div class="separator"></div><form id="edit-profile-form">
+    <label for="edit-first-name">First Name</label><input id="edit-first-name" required maxlength="80">
+    <label for="edit-last-name">Last Name</label><input id="edit-last-name" required maxlength="80">
+    <label for="edit-lrn">LRN</label><input id="edit-lrn" required inputmode="numeric" pattern="[0-9]{6,12}" minlength="6" maxlength="12">
+    <label for="edit-grade">Grade Level</label><select id="edit-grade" required><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option><option>Grade 5</option><option>Grade 6</option></select>
+    <label for="edit-gender">Gender</label><select id="edit-gender"><option value="">Not specified</option><option>Male</option><option>Female</option></select>
+    <label for="edit-birthdate">Birthdate</label><input id="edit-birthdate" type="date">
+    <label for="edit-address">Address</label><input id="edit-address" maxlength="250">
+    <label for="edit-section">Section</label><input id="edit-section" maxlength="80">
+    <label for="edit-status">Status</label><select id="edit-status"><option>Enrolled</option><option>Promoted</option><option>Transferred Out</option><option>Dropped</option><option>Graduated</option></select>
+    <p id="edit-profile-message" class="inline-message" role="status" aria-live="polite"></p><div class="popup-actions"><button class="save-btn" type="submit">Save Changes</button><button class="cancel-btn" type="button" data-close="edit-profile-popup">Cancel</button></div>
+  </form></div></div>
+  <div id="grade-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="grade-popup-title"><div class="popup-content"><button class="modal-close close-btn" type="button" data-close="grade-popup" aria-label="Close">×</button><h3 id="grade-popup-title">Add / Edit Grade</h3><div class="separator"></div><form id="grade-form">
+    <label for="grade-subject">Subject</label><select id="grade-subject" required><option>Mother Tongue</option><option>Filipino</option><option>English</option><option>Mathematics</option><option>Science</option><option>Araling Panlipunan (AP)</option><option>Edukasyon sa Pagpapakatao (EsP)</option><option>MAPEH</option><option>EPP / TLE</option></select>
+    <label for="grade-quarter">Quarter</label><select id="grade-quarter" required><option value="1">Q1</option><option value="2">Q2</option><option value="3">Q3</option><option value="4">Q4</option></select>
+    <label for="grade-value">Grade (0–100)</label><input id="grade-value" type="number" min="0" max="100" step="0.01" required>
+    <p id="grade-form-message" class="inline-message" role="status" aria-live="polite"></p><div class="popup-actions"><button class="save-btn" type="submit">Save Grade</button><button class="cancel-btn" type="button" data-close="grade-popup">Cancel</button></div>
+  </form></div></div>
+  <div id="chatbox" class="chat-side" aria-label="AI assistant panel">
+    <div class="chat-header"><span>AI Assistant</span><button class="close-btn" type="button" aria-label="Close assistant" onclick="document.getElementById('chatbox').classList.remove('show')">×</button></div>
+    <div class="chat-messages"><p><strong>AI:</strong> Hello! I can help with navigation, but this assistant is not connected to an AI service yet.</p></div>
+    <div class="chat-input"><input type="text" placeholder="Type your message..." aria-label="Message"><button class="send-btn" type="button">Send</button></div>
+  </div>
+</body>
+</html>
