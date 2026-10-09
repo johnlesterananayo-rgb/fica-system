@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Student Records</title>
+    <link rel="stylesheet" href="student.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img src="logo.jpeg" alt="Fidelis Logo" class="logo" />
+      <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
+      <button class="logout-btn">Logout</button>
+    </div>
+
+    <div class="layout">
+      <div class="sidebar">
+        <ul>
+          <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="../student/student.html" class="active">Student</a></li>
+          <li><a href="../calendar/calendar.html">Calendar</a></li>
+          <li><a href="../reports/reports.html">Reports</a></li>
+          <li><a href="../settings/settings.html">Settings</a></li>
+          <li><a href="../request/request.html">Request</a></li>
+          <li><a href="../logs/logs.html">Logs</a></li>
+        </ul>
+      </div>
+
+      <div class="main">
+        <div class="card">
+          <h2>Student Records</h2>
+          <button class="add-btn">+ Add Student</button>
+          <table>
+            <thead>
+              <tr>
+                <th>LRN</th>
+                <th>Name</th>
+                <th>Grade</th>
+                <th>Section</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody">
+              <!-- Student rows will appear here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="studentForm" class="popup">
+      <div class="popup-content">
+        <h3>Add Student</h3>
+        <label>LRN</label><input type="text" id="studentLRN" />
+        <label>Name</label><input type="text" id="studentName" />
+        <label>Grade</label><input type="text" id="studentGrade" />
+        <label>Section</label><input type="text" id="studentSection" />
+        <label>Status</label>
+        <select id="studentStatus">
+          <option>Active</option>
+          <option>Dropout</option>
+          <option>Transferred</option>
+          <option>Graduate</option>
+        </select>
+        <button>Save</button>
+        <button class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+
+    <div id="studentProfile" class="popup">
+      <div class="popup-content">
+        <h3>Student Profile</h3>
+        <img src="default.png" alt="Profile Picture" class="profile-pic" />
+        <p><strong>LRN:</strong> <span id="profileLRN"></span></p>
+        <p><strong>Name:</strong> <span id="profileName"></span></p>
+        <p><strong>Grade:</strong> <span id="profileGrade"></span></p>
+        <p><strong>Section:</strong> <span id="profileSection"></span></p>
+        <p><strong>Status:</strong> <span id="profileStatus"></span></p>
+
+        <h4>Subjects & Grades</h4>
+        <div class="terms">
+          <button>1st Term</button>
+          <button>2nd Term</button>
+          <button>3rd Term</button>
+          <button>4th Term</button>
+        </div>
+
+        <table class="grades-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mother Tongue</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Filipino</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>English</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Mathematics</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Science</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Araling Panlipunan</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Edukasyon sa Pagpapakatao</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>MAPEH</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>EPP / TLE</td>
+              <td><input type="text" /></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="status-buttons">
+          <button class="graduate">Graduate</button>
+          <button class="transfer">Transfer</button>
+          <button class="dropout">Dropout</button>
+        </div>
+
+        <div class="action-buttons">
+          <button class="save">Save Grades</button>
+          <button class="close">Close</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

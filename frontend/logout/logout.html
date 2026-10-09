@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Logout</title>
+    <!-- Connector to CSS -->
+    <link rel="stylesheet" href="logout.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img src="logo.jpeg" alt="Fidelis Logo" class="logo" />
+      <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
+      <button
+        class="logout-btn"
+        onclick="
+          document.getElementById('logoutPopup').classList.remove('hidden')
+        "
+      >
+        Logout
+      </button>
+    </div>
+
+    <div class="sidebar">
+      <ul>
+        <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+        <li><a href="../student/student.html">Student</a></li>
+        <li><a href="../calendar/calendar.html">Calendar</a></li>
+        <li><a href="../reports/reports.html">Reports</a></li>
+        <li><a href="../logs/logs.html">Logs</a></li>
+        <li><a href="../settings/settings.html">Settings</a></li>
+      </ul>
+    </div>
+
+    <!-- Logout Popup -->
+    <div id="logoutPopup" class="popup hidden">
+      <div class="popup-content">
+        <h3>Do you want to logout?</h3>
+        <div class="popup-actions">
+          <button
+            class="cancel-btn"
+            onclick="
+              document.getElementById('logoutPopup').classList.add('hidden')
+            "
+          >
+            Cancel
+          </button>
+          <button class="confirm-btn">Yes</button>
+        </div>
+      </div>
+    </div>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+      initPage(); // login guard
+      // Show the question as soon as this page opens.
+      document.getElementById("logoutPopup").classList.remove("hidden");
+      document.querySelector(".confirm-btn").addEventListener("click", signOut);
+      document.querySelector(".cancel-btn").addEventListener("click", () => {
+        window.location.href = FICA.HOME_PAGE;
+      });
+    </script>
+  </body>
+</html>

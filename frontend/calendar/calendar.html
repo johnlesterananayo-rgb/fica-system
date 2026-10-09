@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+  <head>
+    <title>School Calendar</title>
+    <link rel="stylesheet" href="calendar.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img src="logo.jpeg" alt="Fidelis Logo" class="logo" />
+      <span class="title">FIDELIS CHILDREN'S ACADEMY</span>
+      <button class="logout-btn">Logout</button>
+    </div>
+
+    <div class="layout">
+      <div class="sidebar">
+        <ul>
+          <li><a href="../dashboard/dashboard.html">Dashboard</a></li>
+          <li><a href="../student/student.html">Student</a></li>
+          <li>
+            <a href="../calendar/calendar.html" class="active">Calendar</a>
+          </li>
+          <li><a href="../reports/reports.html">Reports</a></li>
+          <li><a href="../settings/settings.html">Settings</a></li>
+          <li><a href="../request/request.html">Request</a></li>
+          <li><a href="../logs/logs.html">Logs</a></li>
+        </ul>
+      </div>
+
+      <div class="main">
+        <div class="card">
+          <h2>School Calendar</h2>
+          <button class="add-btn">+ Add Event</button>
+
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <button class="prev">◀</button>
+              <span class="month-year">October 2026</span>
+              <button class="next">▶</button>
+            </div>
+
+            <table class="calendar-grid">
+              <thead>
+                <tr>
+                  <th>Su</th>
+                  <th>Mo</th>
+                  <th>Tu</th>
+                  <th>We</th>
+                  <th>Th</th>
+                  <th>Fr</th>
+                  <th>Sa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="prev-month">27</td>
+                  <td class="prev-month">28</td>
+                  <td class="prev-month">29</td>
+                  <td class="prev-month">30</td>
+                  <td>1</td>
+                  <td class="today">2</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>5</td>
+                  <td>6</td>
+                  <td>7</td>
+                  <td>8</td>
+                  <td>9</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>12</td>
+                  <td>13</td>
+                  <td>14</td>
+                  <td>15</td>
+                  <td>16</td>
+                  <td>17</td>
+                </tr>
+                <tr>
+                  <td>18</td>
+                  <td>19</td>
+                  <td>20</td>
+                  <td>21</td>
+                  <td>22</td>
+                  <td>23</td>
+                  <td>24</td>
+                </tr>
+                <tr>
+                  <td>25</td>
+                  <td>26</td>
+                  <td>27</td>
+                  <td>28</td>
+                  <td>29</td>
+                  <td>30</td>
+                  <td>31</td>
+                </tr>
+                <tr>
+                  <td class="next-month">1</td>
+                  <td class="next-month">2</td>
+                  <td class="next-month">3</td>
+                  <td class="next-month">4</td>
+                  <td class="next-month">5</td>
+                  <td class="next-month">6</td>
+                  <td class="next-month">7</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="eventTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="eventForm" class="popup">
+      <div class="popup-content">
+        <h3>Add Event</h3>
+        <label>Title</label><input type="text" id="eventTitle" />
+        <label>Date</label><input type="date" id="eventDate" />
+        <label>Time</label><input type="time" id="eventTime" />
+        <label>Description</label><textarea id="eventDescription"></textarea>
+        <button>Save</button>
+        <button class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+
+    <div id="eventDetail" class="popup">
+      <div class="popup-content">
+        <h3>Event Details</h3>
+        <p><strong>Title:</strong> <span id="detailTitle"></span></p>
+        <p><strong>Date:</strong> <span id="detailDate"></span></p>
+        <p><strong>Time:</strong> <span id="detailTime"></span></p>
+        <p>
+          <strong>Description:</strong> <span id="detailDescription"></span>
+        </p>
+        <div class="action-buttons">
+          <button class="edit">Edit</button>
+          <button class="delete">Delete</button>
+          <button class="close">Close</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
