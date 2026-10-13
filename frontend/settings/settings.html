@@ -11,14 +11,22 @@
   <script src="../js/pages.js" defer></script>
 </head>
 <body data-page="settings">
-  <div class="header">
-    <div class="header-left"><img src="logo.jpeg" alt="Fidelis Academy logo" class="logo"></div>
-    <div class="header-center"><span>FIDELIS CHILDREN'S ACADEMY</span></div>
-    <div class="header-right"><button class="ai-btn" type="button" aria-label="Open AI assistant" onclick="document.getElementById('chatbox').classList.toggle('show')"><img src="ailogo.jpeg" alt="AI assistant" class="ailogo"></button></div>
+<div class="header">
+  <div class="left-group">
+    <button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('close')">
+      ☰
+    </button>
+    <img src="logo.jpeg" alt="Academy Logo" class="logo">
+    <span class="academy-name">FIDELIS CHILDREN'S ACADEMY</span>
   </div>
-  <div class="dashboard">
 
-    <div class="sidebar">
+  <button class="ai-btn" onclick="document.getElementById('chatbox').classList.toggle('show')">
+    <img src="ailogo.jpeg" alt="AI Logo" class="ai-icon">
+  </button>
+</div>
+
+<div class="dashboard">
+  <div class="sidebar">
       <ul>
         <li><a href="../dashboard/dashboard.html" >Dashboard</a></li>
         <li><a href="../student/student.html" >Students</a></li>
@@ -29,23 +37,127 @@
         <li><a href="../settings/settings.html" class="active">Settings</a></li>
       </ul>
     </div>
-    <main class="main"><div class="card"><h2>Account Settings</h2><p class="muted">Manage your login account and local display preferences.</p><div class="separator"></div>
-      <div id="page-message" class="status-message" role="status" aria-live="polite" hidden></div>
-      <div class="setting-item"><label for="theme-select">Theme Mode</label><select id="theme-select"><option value="light">Light Mode</option><option value="dark">Dark Mode</option></select></div>
-      <div class="setting-item"><label><input id="mfa-checkbox" type="checkbox" disabled> Enable 2-step verification</label><p class="muted">Multi-factor authentication is not enabled in the current Supabase project configuration.</p></div>
-      <div class="gmail-box"><p>Signed-in account: <strong id="account-email">Loading…</strong></p></div>
-      <div class="button-group"><div class="button-row"><button class="save-btn" id="open-change-email" type="button">Change Email</button></div><button class="action-btn" id="open-change-password" type="button">Change Password</button><button class="action-btn" id="open-reset-password" type="button">Forgot Password / Send Reset Link</button><button class="delete-btn" id="open-settings-logout" type="button">Logout</button></div>
-    </div></main>
+  <div class="main">
+    <div class="card">
+      <h2>Preferences</h2>
+      <div class="separator"></div>
+
+      <div class="setting-item">
+        <label>Theme Mode</label>
+        <select>
+          <option>Light Mode</option>
+          <option selected>Dark Mode</option>
+        </select>
+      </div>
+
+      <!-- Checkbox + Buttons horizontally aligned -->
+      <div class="setting-item horizontal-row">
+        <label>
+          <input type="checkbox"> Enable 2nd Step Verification
+        </label>
+
+        <div class="button-group-inline">
+          <button class="save-btn" onclick="document.getElementById('change-gmail-popup').classList.add('show')">Change Gmail</button>
+          <button class="action-btn" onclick="document.getElementById('password-popup').classList.add('show')">Change Password</button>
+          <button class="action-btn" onclick="document.getElementById('forgot-popup').classList.add('show')">Forgot Password</button>
+        </div>
+      </div>
+
+      <!-- Gmail box below -->
+      <div class="gmail-box">
+        <p>Signed-in account: <strong>admin@gmail.com</strong></p>
+      </div>
+
+      <!-- Logout separate at bottom -->
+      <div class="logout-container">
+        <button class="delete-btn" onclick="document.getElementById('logout-popup').classList.add('show')">Logout</button>
+      </div>
+    </div>
   </div>
-  <div id="change-email-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="change-email-title"><div class="popup-content"><button class="modal-close close-btn" type="button" data-close="change-email-popup" aria-label="Close">×</button><h3 id="change-email-title">Change Email</h3><div class="separator"></div><form id="change-email-form"><label for="new-email">New email address</label><input id="new-email" type="email" required autocomplete="email"><p class="muted">Supabase may send a confirmation link to complete the change.</p><p id="email-form-message" class="inline-message" role="status" aria-live="polite"></p><div class="popup-actions"><button class="save-btn" type="submit">Send Confirmation</button><button class="cancel-btn" type="button" data-close="change-email-popup">Cancel</button></div></form></div></div>
-  <div id="change-password-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="change-password-title"><div class="popup-content"><button class="modal-close close-btn" type="button" data-close="change-password-popup" aria-label="Close">×</button><h3 id="change-password-title">Change Password</h3><div class="separator"></div><form id="change-password-form"><label for="old-password">Current password</label><input id="old-password" type="password" required autocomplete="current-password"><label for="new-password">New password</label><input id="new-password" type="password" required minlength="8" autocomplete="new-password"><label for="confirm-password">Confirm new password</label><input id="confirm-password" type="password" required minlength="8" autocomplete="new-password"><p id="password-form-message" class="inline-message" role="status" aria-live="polite"></p><div class="popup-actions"><button class="save-btn" type="submit">Save Password</button><button class="cancel-btn" type="button" data-close="change-password-popup">Cancel</button></div></form></div></div>
-  <div id="forgot-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="forgot-title"><div class="popup-content"><button class="modal-close close-btn" type="button" data-close="forgot-popup" aria-label="Close">×</button><h3 id="forgot-title">Password Reset</h3><div class="separator"></div><form id="forgot-form"><label for="reset-email">Account email</label><input id="reset-email" type="email" required autocomplete="email"><p class="muted">A password reset link will be sent by Supabase if this email is registered.</p><p id="forgot-form-message" class="inline-message" role="status" aria-live="polite"></p><div class="popup-actions"><button class="save-btn" type="submit">Send Reset Link</button><button class="cancel-btn" type="button" data-close="forgot-popup">Cancel</button></div></form></div></div>
-  <div id="recovery-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="recovery-title"><div class="popup-content"><h3 id="recovery-title">Set New Password</h3><div class="separator"></div><form id="recovery-form"><label for="recovery-password">New password</label><input id="recovery-password" type="password" minlength="8" required autocomplete="new-password"><label for="recovery-confirm-password">Confirm new password</label><input id="recovery-confirm-password" type="password" minlength="8" required autocomplete="new-password"><p id="recovery-form-message" class="inline-message" role="status" aria-live="polite"></p><div class="popup-actions"><button class="save-btn" type="submit">Update Password</button><button class="cancel-btn" type="button" data-close="recovery-popup">Cancel</button></div></form></div></div>
-  <div id="logout-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="logout-title"><div class="popup-content"><h3 id="logout-title">Confirm Logout</h3><p>Are you sure you want to log out?</p><div class="popup-actions"><button class="confirm-btn" id="confirm-settings-logout" type="button">Yes, Logout</button><button class="cancel-btn" type="button" data-close="logout-popup">Cancel</button></div></div></div>
-  <div id="chatbox" class="chat-side" aria-label="AI assistant panel">
-    <div class="chat-header"><span>AI Assistant</span><button class="close-btn" type="button" aria-label="Close assistant" onclick="document.getElementById('chatbox').classList.remove('show')">×</button></div>
-    <div class="chat-messages"><p><strong>AI:</strong> Hello! I can help with navigation, but this assistant is not connected to an AI service yet.</p></div>
-    <div class="chat-input"><input type="text" placeholder="Type your message..." aria-label="Message"><button class="send-btn" type="button">Send</button></div>
+</div>
+
+<!-- Popups (Logout, Change Gmail, Change Password, Forgot Password) -->
+<div id="logout-popup" class="popup">
+  <div class="popup-content">
+    <h3>Confirm Logout</h3>
+    <p>Are you sure you want to log out?</p>
+    <div class="popup-actions">
+      <button class="confirm-btn">Yes, Logout</button>
+      <button class="cancel-btn" onclick="document.getElementById('logout-popup').classList.remove('show')">Cancel</button>
+    </div>
   </div>
+</div>
+
+<div id="change-gmail-popup" class="popup">
+  <div class="popup-content">
+    <h3>Change Gmail Account</h3>
+    <div class="separator"></div>
+    <label>Enter New Gmail Address</label>
+    <input type="text" placeholder="example@gmail.com">
+    <label>Verification Code (sent to Gmail)</label>
+    <input type="text" placeholder="Enter code">
+    <p class="verification-msg error">Wrong code. Try again.</p>
+    <p class="verification-msg success">Code verified successfully!</p>
+    <div class="popup-actions">
+      <button class="save-btn">Verify & Save</button>
+      <button class="cancel-btn" onclick="document.getElementById('change-gmail-popup').classList.remove('show')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="password-popup" class="popup">
+  <div class="popup-content">
+    <h3>Change Password</h3>
+    <div class="separator"></div>
+    <label>Old Password</label>
+    <input type="password" placeholder="Enter old password">
+    <p class="error-msg">Wrong credentials. Please try again.</p>
+    <label>New Password</label>
+    <input type="password" placeholder="Enter new password">
+    <label>Confirm New Password</label>
+    <input type="password" placeholder="Confirm new password">
+    <p class="verification-msg success">Password updated successfully!</p>
+    <div class="popup-actions">
+      <button class="save-btn">Save Password</button>
+      <button class="cancel-btn" onclick="document.getElementById('password-popup').classList.remove('show')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="forgot-popup" class="popup">
+  <div class="popup-content">
+    <h3>Forgot Password</h3>
+    <div class="separator"></div>
+    <label>Enter Gmail Code</label>
+    <input type="text" placeholder="Enter verification code">
+    <p class="verification-msg error">Wrong code. Try again.</p>
+    <p class="verification-msg success">Code verified successfully!</p>
+    <label>Create New Password</label>
+    <input type="password" placeholder="New password">
+    <label>Confirm New Password</label>
+    <input type="password" placeholder="Confirm new password">
+    <p class="verification-msg success">Password reset successfully!</p>
+    <div class="popup-actions">
+      <button class="save-btn">Reset Password</button>
+      <button class="cancel-btn" onclick="document.getElementById('forgot-popup').classList.remove('show')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Chatbox -->
+<div id="chatbox" class="chat-side">
+  <div class="chat-header">
+    <span>AI Assistant</span>
+    <button class="close-btn" onclick="document.getElementById('chatbox').classList.remove('show')">×</button>
+  </div>
+  <div class="chat-messages">
+    <p><strong>AI:</strong> Hello! How can I assist you today?</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" placeholder="Type your message...">
+    <button class="send-btn">Send</button>
+  </div>
+</div>
+
 </body>
 </html>

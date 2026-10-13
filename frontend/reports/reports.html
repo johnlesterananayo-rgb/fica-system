@@ -11,13 +11,23 @@
   <script src="../js/pages.js" defer></script>
 </head>
 <body data-page="reports">
-  <div class="header">
-    <div class="header-left"><img src="logo.jpeg" alt="Fidelis Academy logo" class="logo"></div>
-    <div class="header-center"><span>FIDELIS CHILDREN'S ACADEMY</span></div>
-    <div class="header-right"><button class="ai-btn" type="button" aria-label="Open AI assistant" onclick="document.getElementById('chatbox').classList.toggle('show')"><img src="ailogo.jpeg" alt="AI assistant" class="ailogo"></button></div>
+<div class="header">
+  <div class="left-group">
+    <button class="menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('close')">
+      ☰
+    </button>
+    <img src="logo.jpeg" alt="Academy Logo" class="logo">
+    <span class="academy-name">FIDELIS CHILDREN'S ACADEMY</span>
   </div>
-  <div class="dashboard">
 
+  <button class="ai-btn" onclick="document.getElementById('chatbox').classList.toggle('show')">
+    <img src="ailogo.jpeg" alt="AI Logo" class="ai-icon">
+  </button>
+</div>
+
+
+  <div class="dashboard">
+    
     <div class="sidebar">
       <ul>
         <li><a href="../dashboard/dashboard.html" >Dashboard</a></li>
